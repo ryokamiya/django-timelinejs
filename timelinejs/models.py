@@ -32,7 +32,10 @@ class Timeline(models.Model):
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
     start_date = models.DateField(help_text='Event start date')
+    start_time = models.TimeField(help_text='Event start time')
     end_date = models.DateField(blank=True, null=True, help_text='Event end date')
+    end_time = models.TimeField(blank=True, null=True, help_text='event end time')
+    church = models.ForeignKey(Chuch)
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
