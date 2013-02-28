@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.utils import simplejson
+from sweetremedy.prayer.models import Church
 
 
 class Timeline(models.Model):
@@ -35,7 +36,7 @@ class TimelineEvent(models.Model):
     start_time = models.TimeField(help_text='Event start time')
     end_date = models.DateField(blank=True, null=True, help_text='Event end date')
     end_time = models.TimeField(blank=True, null=True, help_text='event end time')
-    church = models.ForeignKey(Chuch)
+    church = models.ForeignKey(Church)
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
