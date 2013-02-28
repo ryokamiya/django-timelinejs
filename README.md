@@ -5,6 +5,8 @@ Tags: timeline, shortcode, stamen, timeline.verite.co, VeriteCo, HTML5
 Use TimelineJS developed by VéritéCo for your Django site. Just load the tags.
 I'm simply going to copy and adapt the info and docs as per the [TimelineJS-Wordpress-Plugin](https://github.com/VeriteCo/TimelineJS-Wordpress-Plugin)
 
+Cuztomized for prayer service by adding start/end times and church foreign key.
+
 ## Description
 
 There are lots of timeline tools on the web but they are almost all either
