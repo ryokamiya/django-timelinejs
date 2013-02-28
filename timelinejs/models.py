@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.utils import simplejson
-from sweetremedy.prayer.models import Church
+from prayer.models import Church
 
 
 class Timeline(models.Model):
