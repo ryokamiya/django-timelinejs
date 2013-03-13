@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import simplejson
 from prayer.models import Church
+from datetime import datetime
 
 
 class Timeline(models.Model):
@@ -15,7 +16,7 @@ class Timeline(models.Model):
     
     def to_dict(self):
         d = {}
-        d['startDate'] = self.start_date.strftime('%Y,%m,%d')
+        d['startDate'] = datetime.now().strftime('%Y,%m,%d,%H,%M')
         d['type'] = self.type
         d['headline'] = self.headline
         d['text'] = self.text
@@ -33,9 +34,7 @@ class Timeline(models.Model):
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
     start_date = models.DateField(help_text='Event start date')
-    start_time = models.TimeField(help_text='Event start time')
     end_date = models.DateField(blank=True, null=True, help_text='Event end date')
-    end_time = models.TimeField(blank=True, null=True, help_text='event end time')
     church = models.ForeignKey(Church)
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
@@ -45,8 +44,8 @@ class TimelineEvent(models.Model):
     
     def to_dict(self):
         d = {}
-        d['startDate'] = self.start_date.strftime('%Y,%m,%d')
-        d['endDate'] = self.end_date.strftime('%Y,%m,%d') if self.end_date else d['startDate']
+        d['startDate'] = self.start_date.strftime('%Y,%m,%d,%H,%M')
+        d['endDate'] = self.end_date.strftime('%Y,%m,%d,%H,%M') if self.end_date else d['startDate']
         d['headline'] = self.headline
         d['text'] = self.text
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
