@@ -36,7 +36,7 @@ class Timeline(models.Model):
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
     start_date = models.DateTimeField(help_text='Event start date')
-    end_date = models.DatetimeField(blank=True, null=True, help_text='Event end date')
+    end_date = models.DateTimeField(blank=True, null=True, help_text='Event end date')
     church = models.ForeignKey(Church)
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
