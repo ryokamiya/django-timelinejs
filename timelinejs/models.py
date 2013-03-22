@@ -3,12 +3,14 @@ from django.db import models
 from django.utils import simplejson
 from prayer.models import Church
 from datetime import datetime
+from pytz import timezone
+import pytz
 
 
 class Timeline(models.Model):
     headline = models.CharField(max_length=200, help_text='Headline for timeline')
     type = models.CharField(max_length=50, default="default")
-    start_date = models.DateField(blank=True, help_text='Timeline start date')
+    start_date = models.DateTimeField(blank=True, help_text='Timeline start date')
     text = models.TextField(blank=True, help_text='Description of timeline')
     asset_media = models.CharField(max_length=200, blank=True, verbose_name='media', help_text='Media to add to even info: Picutre link, YouTube, Wikipedia, etc.')
     asset_credit = models.CharField(max_length=200, blank=True, verbose_name='credit', help_text='Media credits here')
@@ -33,8 +35,8 @@ class Timeline(models.Model):
 
 class TimelineEvent(models.Model):
     timeline = models.ForeignKey(Timeline)
-    start_date = models.DateField(help_text='Event start date')
-    end_date = models.DateField(blank=True, null=True, help_text='Event end date')
+    start_date = models.DateTimeField(help_text='Event start date')
+    end_date = models.DatetimeField(blank=True, null=True, help_text='Event end date')
     church = models.ForeignKey(Church)
     headline = models.CharField(max_length=200, blank=True, help_text='Headline for event')
     text = models.TextField(blank=True, help_text='Text description of event')
@@ -44,8 +46,11 @@ class TimelineEvent(models.Model):
     
     def to_dict(self):
         d = {}
-        d['startDate'] = self.start_date.strftime('%Y,%m,%d,%H,%M')
-        d['endDate'] = self.end_date.strftime('%Y,%m,%d,%H,%M') if self.end_date else d['startDate']
+        user_timezone = timezone.get_current_timezone()
+        start_date_local = self.start_date.astimezone(user_timezone)
+        d['startDate'] = start_date_local.strftime('%Y,%m,%d,%H,%M')
+        end_date_local = self.end_date.astimezone(user_timezone)
+        d['endDate'] = end_date_local.strftime('%Y,%m,%d,%H,%M') if self.end_date else d['startDate']
         d['headline'] = self.headline
         d['text'] = self.text
         d['asset'] = {'media': self.asset_media, 'credit': self.asset_credit, 'caption': self.asset_caption }
