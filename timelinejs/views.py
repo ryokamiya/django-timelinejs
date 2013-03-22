@@ -32,9 +32,7 @@ class TimelineView(SingleObjectMixin, ListView, JSONResponseMixin):
         except:
             pass
         return super(TimelineView, self).get_context_data(**kwargs)
-    
-    assert False
-    
+        
     def get_queryset(self):
         self.object = self.get_object(Timeline.objects.all())
         try:
