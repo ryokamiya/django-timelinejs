@@ -5,6 +5,7 @@ from prayer.models import Church
 from datetime import datetime
 from pytz import timezone
 import pytz
+from django.utils import timezone
 
 
 class Timeline(models.Model):
